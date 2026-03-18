@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microeconomics (Parkin) • Practice Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        /* Deep blue‑black accent */
+        .accent-bg { background-color: #0A2647; }        /* deep navy */
+        .accent-text { color: #0A2647; }
+        .accent-border { border-color: #0A2647; }
+        .hover-accent-bg:hover { background-color: #041E34; } /* darker */
+
+        /* Smooth transitions (same as original) */
+        .card-enter {
+            animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes slideUpFade {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .option-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .option-btn:hover:not(:disabled) {
+            transform: translateX(4px);
+            background-color: #E0F2FE;   /* very light blue */
+            border-color: #0A2647;
+        }
+
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        .toast-enter {
+            animation: toastSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes toastSlide {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .backdrop-blur {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Minimal Header (deep blue‑black accents) -->
+    <header class="fixed top-0 w-full bg-white/90 backdrop-blur border-b border-slate-200 z-40">
+        <div class="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex flex-col leading-tight">
+                <span class="text-xs font-bold tracking-widest text-slate-400 uppercase">Parkin • Microeconomics 12e</span>
+                <span class="text-lg font-bold accent-text">Test Bank Quiz</span>
+            </div>
+            
+            <div id="mini-progress-container" class="hidden flex items-center gap-3">
+                <div class="text-right">
+                    <div class="text-xs text-slate-400 font-medium">Score</div>
+                    <div class="font-bold text-slate-800"><span id="live-score">0</span></div>
+                </div>
+                <div class="relative w-8 h-8">
+                    <svg class="w-full h-full" viewBox="0 0 100 100">
+                        <circle class="text-slate-200 stroke-current" stroke-width="10" cx="50" cy="50" r="40" fill="transparent"></circle>
+                        <circle id="mini-progress-circle" class="accent-text stroke-current progress-ring__circle" stroke-width="10" stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center justify-center p-6 pt-24 w-full max-w-3xl mx-auto z-10">
+
+        <!-- Motivational Toast -->
+        <div id="motivation-toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl z-50 hidden flex items-center gap-3">
+            <span class="text-xl">📘</span>
+            <span id="motivation-text" class="font-medium text-sm">Keep thinking like an economist!</span>
+        </div>
+
+        <!-- 1. Start Screen -->
+        <div id="start-screen" class="w-full card-enter text-center">
+            <div class="mb-10">
+                <div class="w-24 h-24 accent-bg rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-blue-900/20">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h1 class="text-4xl font-bold text-slate-900 mb-3 tracking-tight">Supply, Demand & Equilibrium</h1>
+                <p class="text-slate-500 text-lg">Parkin Microeconomics 12e • Test bank edition</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="accent-text font-bold text-xl mb-1">60</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">Questions</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="accent-text font-bold text-xl mb-1">Parkin</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">12th edition</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="accent-text font-bold text-xl mb-1">Core</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">micro topics</div>
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="w-full md:w-auto px-12 py-4 accent-bg hover-accent-bg text-white font-semibold rounded-lg shadow-lg shadow-blue-900/20 transition-all transform hover:-translate-y-1">
+                Start assessment
+            </button>
+        </div>
+
+        <!-- 2. Quiz Screen -->
+        <div id="quiz-screen" class="hidden w-full">
+            <div class="mb-8 flex justify-between items-end border-b border-slate-200 pb-4">
+                <div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Question</span>
+                    <span class="text-3xl font-bold text-slate-800"><span id="current-q-num">1</span><span class="text-lg text-slate-400 font-normal">/60</span></span>
+                </div>
+                <div id="topic-badge" class="px-3 py-1 bg-blue-50 accent-text text-xs font-bold uppercase tracking-wide rounded-md">
+                    Price & OC
+                </div>
+            </div>
+
+            <div id="question-card" class="card-enter">
+                <h2 id="question-text" class="text-2xl font-medium text-slate-800 mb-8 leading-snug">
+                    Loading question...
+                </h2>
+
+                <div id="options-container" class="space-y-3 mb-8">
+                    <!-- injected -->
+                </div>
+
+                <div id="feedback-area" class="hidden bg-white rounded-lg p-6 border-l-4 border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div id="feedback-icon" class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1"></div>
+                        <div class="flex-grow">
+                            <h3 id="feedback-title" class="font-bold text-lg mb-1">Correct</h3>
+                            <p id="feedback-explanation" class="text-slate-600 text-sm leading-relaxed"></p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                        <button onclick="nextQuestion()" class="accent-bg text-white px-6 py-2 rounded-md font-medium text-sm hover-accent-bg transition shadow-md">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Results Screen -->
+        <div id="result-screen" class="hidden w-full text-center card-enter">
+            <h2 class="text-3xl font-bold text-slate-900 mb-2">Quiz complete</h2>
+            <p class="text-slate-500 mb-10">Your microeconomics scorecard</p>
+
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 mb-10">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-10">
+                    <div class="relative w-48 h-48">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle class="text-slate-100" stroke-width="12" stroke="currentColor" fill="transparent" r="70" cx="96" cy="96" />
+                            <circle id="final-score-circle" class="accent-text" stroke-width="12" stroke-dasharray="439.8" stroke-dashoffset="439.8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="70" cx="96" cy="96" />
+                        </svg>
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                            <span id="final-percentage" class="text-4xl font-bold text-slate-900 block">0%</span>
+                            <span class="text-xs text-slate-400 font-bold uppercase tracking-wide">mastery</span>
+                        </div>
+                    </div>
+
+                    <div class="text-left space-y-4 w-full md:w-auto">
+                        <div class="flex items-center justify-between gap-8 border-b border-slate-50 pb-2">
+                            <span class="text-sm text-slate-500">Correct</span>
+                            <span id="final-correct" class="font-bold text-green-600 text-xl">0</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-8 border-b border-slate-50 pb-2">
+                            <span class="text-sm text-slate-500">Incorrect</span>
+                            <span id="final-wrong" class="font-bold text-red-500 text-xl">0</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-8">
+                            <span class="text-sm text-slate-500">Total</span>
+                            <span id="final-total" class="font-bold text-slate-900 text-xl">60</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="review-container" class="hidden text-left mb-10">
+                <h3 class="font-bold text-slate-800 mb-4 border-b border-slate-200 pb-2">Review missed questions</h3>
+                <div id="review-list" class="space-y-4"></div>
+            </div>
+
+            <div class="flex gap-4 justify-center">
+                <button onclick="toggleReview()" id="review-btn" class="hidden px-8 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:border-slate-300 transition">
+                    Review mistakes
+                </button>
+                <button onclick="location.reload()" class="px-8 py-3 accent-bg text-white font-medium rounded-lg hover-accent-bg transition shadow-lg shadow-blue-900/20">
+                    Retake quiz
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Milestone Modal -->
+    <div id="milestone-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform duration-300" id="milestone-content">
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Progress check</h3>
+                <p class="text-slate-500 text-sm mb-6">You've completed <span id="milestone-count">0</span> questions.</p>
+                
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle class="text-slate-100" stroke-width="8" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
+                        <circle id="milestone-circle" class="accent-text transition-all duration-1000 ease-out" stroke-width="8" stroke-dasharray="364" stroke-dashoffset="364" stroke-linecap="round" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
+                    </svg>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <span id="milestone-percent" class="text-2xl font-bold text-slate-800">0%</span>
+                    </div>
+                </div>
+
+                <p id="milestone-msg" class="text-sm font-medium accent-text mb-6">You're on the right track</p>
+
+                <button onclick="closeMilestone()" class="w-full py-3 accent-bg text-white rounded-lg font-medium hover-accent-bg transition">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ---------- MICROECONOMICS TEST BANK (Parkin 12e) – 60 questions ----------
+        const questions = [
+            // 1–19 : Markets and Prices / Price and Opportunity Cost
+            { q: "A relative price is the", options: ["slope of the demand curve.", "difference between one money price and another.", "slope of the supply curve.", "ratio of one money price to another."], answer: 3, topic: "Price and Opportunity Cost", explanation: "A relative price is the ratio of one money price to another." },
+            { q: "A relative price is", options: ["the number of dollars that must be given up in exchange for the good.", "also called the money price.", "not an opportunity cost.", "the ratio of one price to another price."], answer: 3, topic: "Price and Opportunity Cost", explanation: "A relative price is the ratio of one price to another price." },
+            { q: "The opportunity cost of good A in terms of good B is equal to the", options: ["money price of good A minus the money price of good B.", "money price of good B minus the money price of good A.", "ratio of the money price of good A to the money price of good B.", "ratio of the money price of good B to the money price of good A."], answer: 2, topic: "Price and Opportunity Cost", explanation: "Opportunity cost of A in terms of B = money price of A / money price of B." },
+            { q: "The relative price of a good is", options: ["an opportunity cost.", "equal to the money price of a good.", "equal to the price of that good divided by the quantity demanded.", "what you get paid for babysitting."], answer: 0, topic: "Price and Opportunity Cost", explanation: "Relative price is an opportunity cost." },
+            { q: "The opportunity cost of a hot dog in terms of hamburgers is the", options: ["ratio of demand slopes.", "ratio of supply slopes.", "money price of a hot dog minus money price of hamburger.", "ratio of the money price of a hot dog to the money price of a hamburger."], answer: 3, topic: "Price and Opportunity Cost", explanation: "It is the ratio of money prices." },
+            { q: "Joe pays $8,000 tuition. The $8,000 is an example of", options: ["a relative price.", "a money price.", "an indexed price.", "an opportunity price."], answer: 1, topic: "Price and Opportunity Cost", explanation: "Money price is the dollars given up." },
+            { q: "Candy bar $1, fast food meal $5. Then", options: ["relative price of candy bar is 5 meals.", "money price of candy bar is 1/5 meal.", "relative price of fast food meal is 5 candy bars.", "money price of fast food meal is 1/5 candy bar."], answer: 2, topic: "Price and Opportunity Cost", explanation: "Relative price of meal = 5 candy bars." },
+            { q: "Hot dog $2, hamburger $4. Then", options: ["relative price of hot dog is 1/2 hamburger.", "money price of hot dog is 2 hamburgers.", "relative price of hamburger is 1/2 hot dog.", "money price of hamburger is 2 hot dogs."], answer: 0, topic: "Price and Opportunity Cost", explanation: "Relative price of hot dog = 2/4 = 0.5 hamburger." },
+            { q: "Football $20, basketball $10. The _____ of a football is ______.", options: ["relative price; 2 basketballs", "relative price; 1/2 basketball", "opportunity cost; $20", "opportunity cost; $10"], answer: 0, topic: "Price and Opportunity Cost", explanation: "Relative price = 20/10 = 2 basketballs." },
+            { q: "Corn chips $3, soda $1. Relative price of corn chips?", options: ["3 bottles of soda per bag", "1/3 bottle per bag", "$3", "33¢"], answer: 0, topic: "Price and Opportunity Cost", explanation: "Relative price = 3/1 = 3 sodas." },
+            { q: "Corn chips $3, soda $1. Relative price of soda?", options: ["3 bags per soda", "1/3 bag per soda", "$3", "33¢"], answer: 1, topic: "Price and Opportunity Cost", explanation: "Relative price = 1/3 bag." },
+            { q: "Ice cream $1.50, soda $0.75. Relative price of ice cream?", options: ["1/2 soda per ice cream", "$1.50", "2 sodas per ice cream", "$0.75"], answer: 2, topic: "Price and Opportunity Cost", explanation: "1.50/0.75 = 2 sodas." },
+            { q: "20yrs ago stove $300, fridge $1500; today stove $600, fridge $1800. True?", options: ["relative price unchanged.", "relative price of fridge increased.", "relative price of stove increased.", "money price of fridge fell."], answer: 2, topic: "Price and Opportunity Cost", explanation: "Stove relative price increased (from 0.2 to 0.33 fridge)." },
+            { q: "Money price of wheat rises, no other price change.", options: ["relative price falls.", "opportunity cost rises.", "demand increases.", "relative price unaffected."], answer: 1, topic: "Price and Opportunity Cost", explanation: "Opportunity cost = what you give up – rises." },
+            { q: "Money price of hats rises. I. relative price rises II. opportunity cost rises", options: ["only I", "both I and II", "only II", "neither"], answer: 1, topic: "Price and Opportunity Cost", explanation: "Both rise because money price increase raises relative price and OC." },
+            { q: "DVD rental $1.50 → $2.00, download $1.00. Relative price of download?", options: ["rises", "falls", "no change", "uncertain"], answer: 1, topic: "Price and Opportunity Cost", explanation: "Download becomes cheaper relative to DVD, so its relative price falls." },
+            { q: "DVD rental $2.50 → $2.00, download $1.00. Relative price of download?", options: ["rises", "falls", "no change", "uncertain"], answer: 0, topic: "Price and Opportunity Cost", explanation: "DVD cheaper, so download’s relative price rises." },
+            { q: "Opportunity cost of a good is same as its", options: ["money price.", "relative price.", "price index.", "none"], answer: 1, topic: "Price and Opportunity Cost", explanation: "OC is the relative price." },
+            { q: "Pizza $12, taco $2. Relative price of pizza?", options: ["$12", "$24", "6 tacos", "1/6 pizza"], answer: 2, topic: "Price and Opportunity Cost", explanation: "12/2 = 6 tacos." },
+
+            // 20–59 : Demand (questions 1–40 from Demand section, text only)
+            { q: "Wants, as opposed to demands, are", options: ["unlimited desires.", "goods the consumer plans to acquire.", "goods acquired.", "dependent on price."], answer: 0, topic: "Demand", explanation: "Wants are unlimited desires; demands reflect plans and ability to pay." },
+            { q: "Demands differ from wants because", options: ["demands are unlimited.", "wants require a plan.", "wants imply a decision, demands no plan.", "demands reflect a decision and plan, wants are unlimited."], answer: 3, topic: "Demand", explanation: "Demands are limited by income and reflect actual buying plans." },
+            { q: "Scarcity guarantees that", options: ["demands exceed wants.", "wants exceed demands.", "demands equal wants.", "most demands are satisfied."], answer: 1, topic: "Demand", explanation: "Wants are unlimited, demands are limited by scarcity." },
+            { q: "Quantity demanded is the amount that", options: ["consumers would like to buy but might not afford.", "is actually bought at a given price.", "consumers plan to buy at a given price.", "firms are willing to sell."], answer: 2, topic: "Demand", explanation: "Quantity demanded is planned purchases at a specific price." },
+            { q: "Quantity demanded is", options: ["always equilibrium quantity.", "independent of price.", "amount consumers plan to purchase at a particular price.", "independent of buying plans."], answer: 2, topic: "Demand", explanation: "It is the planned amount at a given price." },
+            { q: "Graphing demand for corn shows relationship between quantity demanded and", options: ["money price.", "relative price.", "income effect.", "substitution effect."], answer: 1, topic: "Demand", explanation: "Demand curve relates quantity to relative price." },
+            { q: "Law of demand states that changes in", options: ["demand are related to supply.", "quantity demanded are not related to supply.", "quantity demanded inversely related to price.", "demand inversely related to supply."], answer: 2, topic: "Law of Demand", explanation: "Quantity demanded varies inversely with price." },
+            { q: "Law of demand is illustrated by a", options: ["rightward shift.", "leftward shift.", "movement along the demand curve.", "both A and B."], answer: 2, topic: "Law of Demand", explanation: "Price change causes movement along, not shift." },
+            { q: "Law of demand: other things equal, higher price leads to", options: ["smaller demand.", "larger demand.", "smaller quantity demanded.", "larger quantity demanded."], answer: 2, topic: "Law of Demand", explanation: "Higher price reduces quantity demanded." },
+            { q: "Law of demand: quantity demanded varies", options: ["inversely with price.", "inversely with substitute prices.", "directly with income.", "directly with population."], answer: 0, topic: "Law of Demand", explanation: "Inverse relationship with price." },
+            { q: "Law of demand: when price rises", options: ["demand shifts right.", "demand shifts left.", "movement down to larger quantity.", "movement up to smaller quantity."], answer: 3, topic: "Law of Demand", explanation: "Movement up along demand curve to smaller quantity." },
+            { q: "Law of demand: quantity demanded is", options: ["inversely related to price.", "directly related to price.", "positively related to price.", "directly related to supply."], answer: 0, topic: "Law of Demand", explanation: "Inverse relationship." },
+            { q: "Law of demand: the higher", options: ["the price, the lower demand.", "income, the greater demand.", "the price, the higher quantity demanded.", "the price, the smaller quantity demanded."], answer: 3, topic: "Law of Demand", explanation: "Higher price → smaller quantity demanded." },
+            { q: "Law of demand implies: as price of cheeseburger rises, quantity demanded", options: ["increases.", "decreases.", "increases if income rises.", "falls, shifting demand."], answer: 1, topic: "Law of Demand", explanation: "Direct implication of law of demand." },
+            { q: "Law of demand predicts: other things equal", options: ["higher price of downloaded music decreases demand.", "lower price of gasoline decreases quantity demanded.", "higher price of pizza decreases quantity demanded.", "higher coffee price decreases tea demand."], answer: 2, topic: "Law of Demand", explanation: "Higher pizza price decreases quantity of pizza demanded." },
+            { q: "Law of demand implies demand curves", options: ["slope down.", "slope up.", "shift right when price rises.", "shift left when price rises."], answer: 0, topic: "Law of Demand", explanation: "Downward sloping." },
+            { q: "Consistent with law of demand:", options: ["price rise increases DVD quantity.", "price rise decreases soda quantity.", "price fall decreases milk quantity.", "price fall no change in juice."], answer: 1, topic: "Law of Demand", explanation: "Price up → quantity down." },
+            { q: "Law of demand: if nothing else changes, there is", options: ["positive relationship.", "negative relationship.", "linear relationship.", "exponential relationship."], answer: 1, topic: "Law of Demand", explanation: "Negative relationship between price and quantity demanded." },
+            { q: "Relative price falls, substitution effect implies people buy", options: ["less of that good and more substitutes.", "more of that good and less substitutes.", "less of both.", "more of both."], answer: 1, topic: "Demand", explanation: "Substitution effect: buy more of cheaper good, less of its substitutes." },
+            { q: "Pizza price $12→$10, definitely", options: ["income effect means buy less pizza.", "substitution effect means buy more pizza.", "quantity demanded won't change.", "none."], answer: 1, topic: "Demand", explanation: "Lower price → substitution effect increases quantity." },
+            { q: "Cereal price rises, people eat eggs instead. Example of", options: ["decrease in quantity demanded of cereal (substitution).", "increase in quantity demanded of eggs (income).", "decrease in supply of cereal.", "increase in supply of eggs."], answer: 0, topic: "Demand", explanation: "Higher cereal price reduces quantity demanded due to substitution." },
+            { q: "In market for magazines, income effect means", options: ["magazines bought by high income.", "price decrease of substitute makes readers poorer.", "higher price reduces purchasing power, fewer magazines.", "higher price raises relative price, read more books."], answer: 2, topic: "Demand", explanation: "Income effect: price rise reduces real income, so buy less." },
+            { q: "Income effect in aspirin market means", options: ["aspirin taken by higher income.", "lower substitute price makes takers poorer.", "higher aspirin price reduces purchasing power, buy fewer.", "higher price makes people look for substitutes."], answer: 2, topic: "Demand", explanation: "Price increase → real income falls → buy less." },
+            { q: "Pizza price $14→$12, income effect means", options: ["people buy less.", "purchasing power increases.", "demand won't change.", "none."], answer: 1, topic: "Demand", explanation: "Lower price increases purchasing power." },
+            { q: "Price falls, income effect for normal good implies people buy", options: ["less because relative price fell.", "more because relative price rose.", "less because can't afford.", "more because can afford more."], answer: 3, topic: "Demand", explanation: "Income effect: real income up, buy more normal goods." },
+            { q: "Normal goods: why demand slopes down?", options: ["prices and income", "substitutes and complements", "resources and tech", "substitution and income effects"], answer: 3, topic: "Demand", explanation: "Both effects lead to inverse relationship." },
+            { q: "Apples normal good, price 50→60¢, quantity decreases because of", options: ["substitution only.", "income only.", "change in income.", "substitution and income effects."], answer: 3, topic: "Demand", explanation: "Both effects reduce quantity demanded." },
+            { q: "Inferior good price falls: substitution effect → ____, income effect → ____", options: ["increase; increase", "increase; decrease", "decrease; increase", "decrease; decrease"], answer: 1, topic: "Demand", explanation: "Substitution: more, income: less (since real income up, buy less inferior)." },
+            { q: "Normal good price falls: substitution → ____, income → ____", options: ["increase; increase", "increase; decrease", "decrease; increase", "decrease; decrease"], answer: 0, topic: "Demand", explanation: "Both increase quantity." },
+            { q: "Which influences buying plans but does NOT shift demand curve?", options: ["price of good", "prices of related goods", "income", "preferences"], answer: 0, topic: "Demand", explanation: "Price change causes movement along, not shift." },
+            { q: "Each point on demand curve reflects", options: ["all wants.", "highest price consumers willing to pay for that unit.", "highest price sellers accept.", "lowest cost tech."], answer: 1, topic: "Demand", explanation: "Demand curve shows willingness to pay." },
+            { q: "Quantity of iPads planned to buy depends on all EXCEPT", options: ["rival's tablet price.", "iPad price.", "technology to produce iPad.", "price of apps."], answer: 2, topic: "Demand", explanation: "Technology affects supply, not demand." },
+            { q: "A substitute is a good", options: ["used in place of another.", "not used in place of another.", "of lower quality.", "of higher quality."], answer: 0, topic: "Demand", explanation: "Substitute replaces another good." },
+            { q: "People buy more of good 1 when price of good 2 rises. These are", options: ["complements.", "substitutes.", "normal.", "inferior."], answer: 1, topic: "Demand", explanation: "Price of substitute up → demand for good 1 up." },
+            { q: "Which pair are most likely substitutes?", options: ["DVDs and DVD players", "cola and lemon‑lime soda", "lettuce and dressing", "peanut butter and gasoline"], answer: 1, topic: "Demand", explanation: "Cola and lemon‑lime soda are substitutes." },
+            { q: "A complement is a good", options: ["of lower quality.", "used in conjunction with another.", "used instead of another.", "of higher quality."], answer: 1, topic: "Demand", explanation: "Complements are used together." },
+            { q: "People buy more good 1 when price of good 2 falls. These are", options: ["complements.", "substitutes.", "normal.", "inferior."], answer: 0, topic: "Demand", explanation: "Complement: price down → demand for other up." },
+            { q: "Ham and eggs complements. Price of ham rises → demand for eggs will", options: ["increase or decrease.", "decrease, demand curve left.", "not change.", "decrease and demand curve for ham shift."], answer: 1, topic: "Demand", explanation: "Higher ham price → less ham → less eggs (complement)." },
+            { q: "Which shifts demand for hamburgers?", options: ["increase in meat price", "increase in hamburger price", "fall in french fries price (complement)", "increase in number of restaurants"], answer: 2, topic: "Demand", explanation: "Complement price down → demand for hamburgers up." },
+            // 60th question (from Supply section)
+            { q: "Which of the following is NOT one of the factors that influences the supply of a product?", options: ["technology", "income", "number of suppliers", "expected future prices"], answer: 1, topic: "Supply", explanation: "Income influences demand, not supply." }
+        ];
+
+        // Encouragements (micro‑style)
+        const encouragements = [
+            "Perfectly elastic effort! 📈",
+            "You're at equilibrium! ⚖️",
+            "Marginal benefit exceeds marginal cost! 🧠",
+            "Keep substituting wisely! 🔄",
+            "Diminishing returns? Not with you! 🚀",
+            "Invisible hand high five! ✋",
+            "Consumer surplus FTW! 💰"
+        ];
+
+        // --- STATE ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let wrongAnswers = [];
+        const totalQuestions = questions.length;
+
+        // DOM elements
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackExplanation = document.getElementById('feedback-explanation');
+        const feedbackIcon = document.getElementById('feedback-icon');
+        const topicBadge = document.getElementById('topic-badge');
+        const currentQNum = document.getElementById('current-q-num');
+        const liveScore = document.getElementById('live-score');
+        const miniProgressContainer = document.getElementById('mini-progress-container');
+        const miniProgressCircle = document.getElementById('mini-progress-circle');
+        const milestoneModal = document.getElementById('milestone-modal');
+        const milestoneContent = document.getElementById('milestone-content');
+        const milestoneCount = document.getElementById('milestone-count');
+        const milestonePercent = document.getElementById('milestone-percent');
+        const milestoneCircle = document.getElementById('milestone-circle');
+        const motivationToast = document.getElementById('motivation-toast');
+        const motivationText = document.getElementById('motivation-text');
+
+        // --- FUNCTIONS (identical logic, only colors changed) ---
+        function startQuiz() {
+            startScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            miniProgressContainer.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestionIndex];
+            feedbackArea.classList.add('hidden');
+            optionsContainer.innerHTML = '';
+            questionText.textContent = q.q;
+            currentQNum.textContent = currentQuestionIndex + 1;
+            topicBadge.textContent = q.topic;
+            const progressPercent = (currentQuestionIndex / totalQuestions) * 100;
+            const offset = 251.2 - (251.2 * progressPercent / 100);
+            miniProgressCircle.style.strokeDashoffset = offset;
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn w-full text-left p-5 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-medium text-lg';
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(idx, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIdx, btnEl) {
+            const q = questions[currentQuestionIndex];
+            const btns = optionsContainer.getElementsByTagName('button');
+            for (let b of btns) { b.disabled = true; b.classList.add('opacity-60', 'cursor-not-allowed'); }
+            const correct = selectedIdx === q.answer;
+            feedbackArea.classList.remove('hidden', 'border-red-200', 'border-green-200');
+            feedbackIcon.classList.remove('bg-red-100', 'text-red-600', 'bg-green-100', 'text-green-600');
+            feedbackTitle.classList.remove('text-red-700', 'text-green-700');
+            if (correct) {
+                btnEl.classList.remove('border-slate-200', 'bg-white', 'opacity-60');
+                btnEl.classList.add('border-green-500', 'bg-green-50', 'text-green-900', 'font-bold');
+                feedbackArea.classList.add('border-green-200');
+                feedbackIcon.classList.add('bg-green-100', 'text-green-600');
+                feedbackIcon.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>`;
+                feedbackTitle.textContent = "Correct";
+                feedbackTitle.classList.add('text-green-700');
+                score++;
+                liveScore.textContent = score;
+            } else {
+                btnEl.classList.remove('border-slate-200', 'bg-white', 'opacity-60');
+                btnEl.classList.add('border-red-500', 'bg-red-50', 'text-red-900');
+                const correctBtn = btns[q.answer];
+                correctBtn.classList.remove('border-slate-200', 'bg-white', 'opacity-60');
+                correctBtn.classList.add('border-green-500', 'bg-green-50', 'text-green-900', 'font-bold');
+                feedbackArea.classList.add('border-red-200');
+                feedbackIcon.classList.add('bg-red-100', 'text-red-600');
+                feedbackIcon.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                feedbackTitle.textContent = "Incorrect";
+                feedbackTitle.classList.add('text-red-700');
+                wrongAnswers.push({ q: q.q, userAns: q.options[selectedIdx], correctAns: q.options[q.answer], explanation: q.explanation });
+            }
+            feedbackExplanation.textContent = q.explanation;
+            feedbackArea.classList.add('card-enter');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex % 10 === 0 && currentQuestionIndex < totalQuestions) { showMilestone(); return; }
+            if (currentQuestionIndex % 3 === 0) showMotivation();
+            if (currentQuestionIndex < totalQuestions) loadQuestion();
+            else showResults();
+        }
+
+        function showMotivation() {
+            const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
+            motivationText.textContent = msg;
+            motivationToast.classList.remove('hidden');
+            motivationToast.classList.add('toast-enter');
+            setTimeout(() => motivationToast.classList.add('hidden'), 3000);
+        }
+
+        function showMilestone() {
+            quizScreen.classList.add('blur-sm');
+            milestoneModal.classList.remove('hidden');
+            setTimeout(() => {
+                milestoneModal.classList.remove('opacity-0');
+                milestoneContent.classList.remove('scale-95');
+                milestoneContent.classList.add('scale-100');
+            }, 10);
+            const percent = Math.round((score / currentQuestionIndex) * 100);
+            milestoneCount.textContent = currentQuestionIndex;
+            milestonePercent.textContent = `${percent}%`;
+            const offset = 364 - (364 * percent / 100);
+            setTimeout(() => { milestoneCircle.style.strokeDashoffset = offset; }, 300);
+        }
+
+        function closeMilestone() {
+            milestoneModal.classList.add('opacity-0');
+            setTimeout(() => {
+                milestoneModal.classList.add('hidden');
+                quizScreen.classList.remove('blur-sm');
+                loadQuestion();
+            }, 300);
+        }
+
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            miniProgressContainer.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            const percent = Math.round((score / totalQuestions) * 100);
+            const circle = document.getElementById('final-score-circle');
+            const offset = 439.8 - (439.8 * percent / 100);
+            setTimeout(() => {
+                circle.style.transition = 'stroke-dashoffset 1.5s ease-out';
+                circle.style.strokeDashoffset = offset;
+            }, 500);
+            document.getElementById('final-percentage').textContent = `${percent}%`;
+            document.getElementById('final-correct').textContent = score;
+            document.getElementById('final-wrong').textContent = wrongAnswers.length;
+            document.getElementById('final-total').textContent = `${score} pts`;
+            const reviewBtn = document.getElementById('review-btn');
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+            if (wrongAnswers.length > 0) {
+                reviewBtn.classList.remove('hidden');
+                wrongAnswers.forEach((item, i) => {
+                    const div = document.createElement('div');
+                    div.className = "bg-white p-4 rounded-lg border border-slate-200 shadow-sm";
+                    div.innerHTML = `
+                        <p class="font-bold text-slate-800 text-sm mb-2">${i+1}. ${item.q}</p>
+                        <div class="flex flex-col gap-2 text-sm">
+                            <div class="flex items-center gap-2 text-red-600 bg-red-50 p-2 rounded"><span class="font-bold">✘ You:</span> ${item.userAns}</div>
+                            <div class="flex items-center gap-2 text-green-700 bg-green-50 p-2 rounded"><span class="font-bold">✔ Correct:</span> ${item.correctAns}</div>
+                            <div class="text-slate-500 italic mt-1 pl-2 border-l-2 border-slate-200">💡 ${item.explanation}</div>
+                        </div>
+                    `;
+                    reviewList.appendChild(div);
+                });
+            }
+        }
+
+        function toggleReview() {
+            const container = document.getElementById('review-container');
+            container.classList.toggle('hidden');
+            if (!container.classList.contains('hidden')) container.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
